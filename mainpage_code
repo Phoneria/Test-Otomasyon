@@ -100,7 +100,7 @@ namespace Izzet_Test_V1
         /// Saves UI elements' paths to a file.
         /// </summary>
         /// <param name="elements">List of UI elements</param>
-        public static void SaveElements(IList<Unknown> elements)
+        public static void SaveElements(IList<Unknown> elements, bool saveImage = true, bool saveTxt = true )
         {
             try
             {
@@ -111,14 +111,21 @@ namespace Izzet_Test_V1
                         try
                         {
                             string elementPath = element.GetPath().ToString();
-                            counter += 1;
+                            string imgPath = imagesFolder + "\\" + Convert.ToString(counter) + ".png";
                             
-                            // It writes XPaths to saveToTxt
-                            writer.WriteLine(elementPath);
                             
-                            string element_savePath = imagesFolder + "\\" + Convert.ToString(counter) + ".png";
-                            // It saves images to ImagesFolder
-                            CaptureElementScreenshot(elementPath, element_savePath);
+                            if (saveTxt == true){
+                        		
+                            	// It writes XPaths to saveToTxt
+                            	writer.WriteLine(elementPath);
+                            
+                            }
+                            
+                            if (saveImage == true){
+                            	// It saves images to ImagesFolder
+                            	counter += 1;
+                            	CaptureElementScreenshot(elementPath, imgPath );
+                            }
                             
                             
                         }
@@ -141,7 +148,7 @@ namespace Izzet_Test_V1
         /*
   		 BU FONKSİYON RANOREXİN GÖRDÜĞÜ TÜM XPATH'LERİ TXT DOSYASINA KAYDEDİYOR 
   		*/
-        public static void ProcessAllElements(){
+        public static void ProcessAllElements(bool saveImage = true, bool saveTxt = true){
         	
     	    string basePath = RanorexHelper.GetBasePath();
             if (string.IsNullOrEmpty(basePath)) return; // Stop execution if base path is invalid
@@ -149,7 +156,7 @@ namespace Izzet_Test_V1
             IList<Unknown> elements = RanorexHelper.GetUIElements(basePath);
             if (elements == null || elements.Count == 0) return; // Stop execution if no elements found
 
-            RanorexHelper.SaveElements(elements);
+            RanorexHelper.SaveElements(elements, saveImage, saveTxt);
         }
     
   		
@@ -170,7 +177,7 @@ namespace Izzet_Test_V1
         public static void Main()
         {
             
-           RanorexHelper.ProcessAllElements();
+           RanorexHelper.ProcessAllElements(true,true);
 
         }
         private void Init()
