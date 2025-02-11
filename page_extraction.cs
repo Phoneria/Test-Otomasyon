@@ -26,9 +26,16 @@ using Ranorex.Core.Testing;
 
 
 
+/*
+ * Caption
+ * Text
+ * Shell
+ * 	Text
+ * 
+ * 
+ * */
 
-
-
+// elementCount : 317 
 
 namespace Izzet_Test_V1
 {
@@ -45,12 +52,14 @@ namespace Izzet_Test_V1
 
         public static void Main()
         {
+        	string save_to_txt = @"C:\Users\mirsad\Desktop\Izzet\UIElements.txt";
+         	string basePath = repo.AselsanKardelen.AbsoluteBasePath.ToString();
+         	
             try
             {
-             string basePath = repo.AselsanKardelen.AbsoluteBasePath.ToString();
             IList<Unknown> elements = Host.Local.Find<Unknown>(basePath + "//*");
             
-            using (StreamWriter writer = new StreamWriter("UIElements.txt"))
+            using (StreamWriter writer = new StreamWriter(save_to_txt))
             {
                 foreach (var element in elements)
                 {
@@ -66,7 +75,8 @@ namespace Izzet_Test_V1
                 Report.Error($"An error occurred: {ex.Message}");
             }
 
-                    }
+        }
 
-    }
+	}
+
 }
